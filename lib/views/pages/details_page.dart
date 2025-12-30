@@ -98,7 +98,10 @@ class _DetailsPageState extends State<DetailsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Details'),
+        title: const Text(
+          'Details',
+          style: TextStyle(fontFamily: 'PokemonBW', fontSize: 28),
+        ),
         actions: [
           ValueListenableBuilder<List<Map<String, dynamic>>>(
             valueListenable: favoritedPokemonsNotifier,
@@ -126,8 +129,9 @@ class _DetailsPageState extends State<DetailsPage> {
                       Text(
                         (currentPokemon['name'] as String).capitalize2(),
                         style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 36,
+                          // fontWeight: FontWeight.bold,
+                          fontFamily: 'PokemonBW',
                         ),
                       ),
                       Text(

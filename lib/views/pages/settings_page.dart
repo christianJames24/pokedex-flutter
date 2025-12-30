@@ -18,7 +18,10 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(
+          'Settings',
+          style: TextStyle(fontFamily: 'PokemonBW', fontSize: 28),
+        ),
         leading: BackButton(
           onPressed: () {
             Navigator.pop(context);

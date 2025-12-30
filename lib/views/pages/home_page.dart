@@ -74,7 +74,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Unova Pokedex'),
+        title: const Text(
+          'Unova Pokedex',
+          style: TextStyle(fontFamily: 'PokemonBW', fontSize: 28),
+        ),
         actions: [
           PopupMenuButton<SortOption>(
             icon: const Icon(Icons.sort),

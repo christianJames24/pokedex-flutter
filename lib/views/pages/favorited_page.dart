@@ -9,7 +9,12 @@ class FavoritedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Favorited Pokemon')),
+      appBar: AppBar(
+        title: const Text(
+          'Favorited Pokemon',
+          style: TextStyle(fontFamily: 'PokemonBW', fontSize: 28),
+        ),
+      ),
       body: ValueListenableBuilder<List<Map<String, dynamic>>>(
         valueListenable: favoritedPokemonsNotifier,
         builder: (context, favorites, child) {
