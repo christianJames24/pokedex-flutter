@@ -72,6 +72,8 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final typesList = (currentPokemon['types'] as String).split(',');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Details'),
@@ -109,6 +111,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       //     );
                       //   },
                       // ),
+                      SizedBox(height: 25),
                       Image.asset(
                         'assets/images/pokemon/${currentPokemon['id']}.png',
                         fit: BoxFit.contain,
@@ -119,6 +122,31 @@ class _DetailsPageState extends State<DetailsPage> {
                             size: 48,
                           );
                         },
+                      ),
+                      Text(
+                        (currentPokemon['types'] as String),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      Row(
+                        children: typesList.map((type) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Image.asset(
+                              'assets/images/types/${type.trim()}.png',
+                              fit: BoxFit.contain,
+                              excludeFromSemantics: true,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(
+                                  Icons.image_not_supported,
+                                  size: 48,
+                                );
+                              },
+                            ),
+                          );
+                        }).toList(),
                       ),
                     ],
                   ),

@@ -136,6 +136,7 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index) {
                 final p = filteredPokemons[index];
                 final pokemonId = p['id']?.toString() ?? index.toString();
+                final typesList = (p['types'] as String).split(',');
 
                 return Column(
                   key: ValueKey('pokemon_$pokemonId'),
@@ -198,12 +199,34 @@ class _HomePageState extends State<HomePage> {
                                         color: Colors.grey.shade600,
                                       ),
                                     ),
-                                    Text(
-                                      (p['types'] as String).toUpperCase(),
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey.shade600,
-                                      ),
+                                    // Text(
+                                    //   (p['types'] as String).toUpperCase(),
+                                    //   style: TextStyle(
+                                    //     fontSize: 12,
+                                    //     color: Colors.grey.shade600,
+                                    //   ),
+                                    // ),
+                                    SizedBox(height: 8),
+                                    Row(
+                                      children: typesList.map((type) {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            right: 8.0,
+                                          ),
+                                          child: Image.asset(
+                                            'assets/images/types/${type.trim()}.png',
+                                            fit: BoxFit.contain,
+                                            excludeFromSemantics: true,
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                                  return const Icon(
+                                                    Icons.image_not_supported,
+                                                    size: 48,
+                                                  );
+                                                },
+                                          ),
+                                        );
+                                      }).toList(),
                                     ),
                                   ],
                                 ),
