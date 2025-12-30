@@ -81,6 +81,7 @@ class _DetailsPageState extends State<DetailsPage> {
       appBar: AppBar(
         title: const Text('Details'),
         // actions: const [CloseButton()],
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.star_border))],
       ),
       body: loading
           ? const Center(child: CircularProgressIndicator())
@@ -182,7 +183,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Text(abilitiesList.join(', ')),
+                      Text(abilitiesList.join(', ').capitalize2()),
                       SizedBox(height: 25),
                       Text(
                         'Moves',
@@ -191,7 +192,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Text(movesList.join(', ')),
+                      Text(movesList.join(', ').capitalize2()),
                       SizedBox(height: 25),
                       Text(
                         'Stats',
@@ -200,7 +201,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Text(statsList.join(', ')),
+                      Text(statsList.join(', ').capitalize2()),
                     ],
                   ),
                 ),

@@ -10,11 +10,9 @@ extension StringExtension on String {
   String capitalize2() {
     if (isEmpty) return this;
 
-    return split('-')
-        .map(
-          (part) =>
-              part.isEmpty ? part : part[0].toUpperCase() + part.substring(1),
-        )
-        .join('-');
+    return replaceAllMapped(
+      RegExp(r'(^|[\s-])([a-zA-Z])'),
+      (match) => '${match.group(1)}${match.group(2)!.toUpperCase()}',
+    );
   }
 }
