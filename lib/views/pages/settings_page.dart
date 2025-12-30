@@ -169,7 +169,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 const SizedBox(height: 4),
                 const Text(
-                  "Datasets for images and data from Kaggle",
+                  "Images from Bulbagarden",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 11),
+                ),
+                const SizedBox(height: 4),
+                const Text(
+                  "Dataset from Kaggle",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 11),
                 ),

@@ -73,6 +73,9 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     final typesList = (currentPokemon['types'] as String).split(',');
+    final abilitiesList = (currentPokemon['abilities'] as String).split(',');
+    final movesList = (currentPokemon['moves'] as String).split(',');
+    final statsList = (currentPokemon['stats'] as String).split(',');
 
     return Scaffold(
       appBar: AppBar(
@@ -123,13 +126,16 @@ class _DetailsPageState extends State<DetailsPage> {
                           );
                         },
                       ),
+                      SizedBox(height: 25),
+
                       Text(
-                        (currentPokemon['types'] as String),
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey.shade600,
+                        'Type(s)',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
+                      SizedBox(height: 10),
                       Row(
                         children: typesList.map((type) {
                           return Padding(
@@ -137,6 +143,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             child: Image.asset(
                               'assets/images/types/${type.trim()}.png',
                               fit: BoxFit.contain,
+                              height: 15,
                               excludeFromSemantics: true,
                               errorBuilder: (context, error, stackTrace) {
                                 return const Icon(
@@ -148,6 +155,52 @@ class _DetailsPageState extends State<DetailsPage> {
                           );
                         }).toList(),
                       ),
+                      SizedBox(height: 25),
+                      Text(
+                        'Base Experience:',
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        currentPokemon['base_experience']?.toString() ??
+                            'Unknown',
+                      ),
+                      Text(
+                        'Height:',
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      Text(currentPokemon['height']?.toString() ?? 'Unknown'),
+                      Text(
+                        'Weight:',
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      Text(currentPokemon['weight']?.toString() ?? 'Unknown'),
+                      SizedBox(height: 25),
+                      Text(
+                        'Abilities',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(abilitiesList.join(', ')),
+                      SizedBox(height: 25),
+                      Text(
+                        'Moves',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(movesList.join(', ')),
+                      SizedBox(height: 25),
+                      Text(
+                        'Stats',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(statsList.join(', ')),
                     ],
                   ),
                 ),
