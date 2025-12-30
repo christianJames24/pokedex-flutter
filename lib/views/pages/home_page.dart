@@ -228,9 +228,15 @@ class _HomePageState extends State<HomePage> {
                                 width: 48,
                                 height: 48,
                                 child: Image.asset(
-                                  'assets/images/bg.jpg',
+                                  'assets/images/sprites/$pokemonId.gif',
                                   fit: BoxFit.contain,
                                   excludeFromSemantics: true,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const Icon(
+                                      Icons.image_not_supported,
+                                      size: 48,
+                                    );
+                                  },
                                 ),
                               ),
                               const SizedBox(width: 12),
