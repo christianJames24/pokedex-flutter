@@ -24,6 +24,8 @@ class _DetailsPageState extends State<DetailsPage> {
     super.initState();
     currentPokemon = widget.pokemon;
     loadPokemons();
+
+    playSound(soundString: 'cries/${currentPokemon['id']}.wav', volume: 0.5);
   }
 
   Future<void> loadPokemons() async {
@@ -52,6 +54,8 @@ class _DetailsPageState extends State<DetailsPage> {
           (currentIndex - 1 + allPokemons.length) % allPokemons.length;
       currentPokemon = allPokemons[currentIndex];
     });
+
+    playSound(soundString: 'cries/${currentPokemon['id']}.wav', volume: 0.5);
   }
 
   void goToNext() {
@@ -62,6 +66,8 @@ class _DetailsPageState extends State<DetailsPage> {
       currentIndex = (currentIndex + 1) % allPokemons.length;
       currentPokemon = allPokemons[currentIndex];
     });
+
+    playSound(soundString: 'cries/${currentPokemon['id']}.wav', volume: 0.5);
   }
 
   void toggleFavorite() {

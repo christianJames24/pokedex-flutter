@@ -22,14 +22,32 @@ Future<void> initSounds() async {
   for (final sound in soundsToPreload) {
     _loadedSounds[sound] = await _soloud.loadAsset('assets/sounds/$sound');
   }
+
+  _loadPokemonCries();
 }
 
-Future<void> playSound({required String soundString}) async {
+Future<void> _loadPokemonCries() async {
+  for (int id = 494; id <= 649; id++) {
+    try {
+      _loadedSounds['cries/$id.wav'] = await _soloud.loadAsset(
+        'assets/sounds/cries/$id.wav',
+      );
+      await Future.delayed(Duration(milliseconds: 50));
+    } catch (e) {
+      // print('Error loading cry for Pokemon ID $id: $e');
+    }
+  }
+}
+
+Future<void> playSound({
+  required String soundString,
+  double volume = 1.0,
+}) async {
   if (!_loadedSounds.containsKey(soundString)) {
     _loadedSounds[soundString] = await _soloud.loadAsset(
       'assets/sounds/$soundString',
     );
   }
 
-  await _soloud.play(_loadedSounds[soundString]!);
+  await _soloud.play(_loadedSounds[soundString]!, volume: volume);
 }

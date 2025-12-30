@@ -26,7 +26,7 @@ class WidgetTree extends StatelessWidget {
             : Image.asset(
                 'assets/images/black_logo.webp',
                 fit: BoxFit.cover,
-                height: 60.0,
+                height: 63.5,
               ),
         actions: [
           IconButton(
