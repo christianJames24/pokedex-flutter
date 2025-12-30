@@ -40,6 +40,11 @@ class _SettingsPageState extends State<SettingsPage> {
               FilledButton(
                 onPressed: () {
                   favoritedPokemonsNotifier.value = [];
+                  saveFavoritesToStorage();
+
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('Favorites cleared!')));
                 },
                 child: Text("Reset"),
               ),
@@ -189,6 +194,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   "Dataset from Kaggle",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 11),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  "The FontStruction “Pokemon B/W” (https://fontstruct.com/fontstructions/show/563645) by “metax” is licensed under a Creative Commons Attribution license (http://creativecommons.org/licenses/by/3.0/).",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 8),
                 ),
               ],
             ),
