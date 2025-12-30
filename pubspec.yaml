@@ -61,6 +61,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/sprites/
+    - assets/images/pokemon/
     - assets/datasets/
   #   - images/a_dot_ham.jpeg
 

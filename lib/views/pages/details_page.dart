@@ -75,7 +75,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Details'),
-        actions: const [CloseButton()],
+        // actions: const [CloseButton()],
       ),
       body: loading
           ? const Center(child: CircularProgressIndicator())
@@ -98,8 +98,19 @@ class _DetailsPageState extends State<DetailsPage> {
                       Text(
                         '#${currentPokemon['id']?.toString() ?? 'Unknown ID'}',
                       ),
+                      // Image.asset(
+                      //   'assets/images/sprites/${currentPokemon['id']}.gif',
+                      //   fit: BoxFit.contain,
+                      //   excludeFromSemantics: true,
+                      //   errorBuilder: (context, error, stackTrace) {
+                      //     return const Icon(
+                      //       Icons.image_not_supported,
+                      //       size: 48,
+                      //     );
+                      //   },
+                      // ),
                       Image.asset(
-                        'assets/images/sprites/${currentPokemon['id']}.gif',
+                        'assets/images/pokemon/${currentPokemon['id']}.png',
                         fit: BoxFit.contain,
                         excludeFromSemantics: true,
                         errorBuilder: (context, error, stackTrace) {
