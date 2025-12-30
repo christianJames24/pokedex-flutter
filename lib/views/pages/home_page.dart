@@ -1,19 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'dart:async';
-import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart';
 import 'package:application/data/string_extension.dart';
-
-enum SortOption {
-  idAsc('ID: Low to High'),
-  idDesc('ID: High to Low'),
-  nameAsc('Name: A-Z'),
-  nameDesc('Name: Z-A');
-
-  const SortOption(this.label);
-  final String label;
-}
+import 'package:application/data/pokemon.dart';
+import 'package:application/views/pages/details_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -43,66 +32,17 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  static List _decodeJson(String response) {
-    return json.decode(response);
-  }
-
   Future<void> loadPokemons() async {
-    final response = await rootBundle.loadString(
-      'assets/datasets/pokemon_data.json',
-    );
-
-    final List data = await compute(_decodeJson, response);
-
-    final List unova = data.where((p) {
-      final int id = int.tryParse(p['id'].toString()) ?? 0;
-      return id >= 494 && id <= 649;
-    }).toList();
+    final List data = await PokemonData.loadAllPokemons();
+    final List unova = PokemonData.filterUnovaPokemons(data);
 
     if (mounted) {
       setState(() {
         allPokemons = unova;
-        filteredPokemons = _sortPokemons(unova);
+        filteredPokemons = PokemonData.sortPokemons(unova, currentSort);
         loading = false;
       });
     }
-  }
-
-  List _sortPokemons(List pokemons) {
-    final sorted = List.from(pokemons);
-
-    switch (currentSort) {
-      case SortOption.idAsc:
-        sorted.sort((a, b) {
-          final idA = int.tryParse(a['id'].toString()) ?? 0;
-          final idB = int.tryParse(b['id'].toString()) ?? 0;
-          return idA.compareTo(idB);
-        });
-        break;
-      case SortOption.idDesc:
-        sorted.sort((a, b) {
-          final idA = int.tryParse(a['id'].toString()) ?? 0;
-          final idB = int.tryParse(b['id'].toString()) ?? 0;
-          return idB.compareTo(idA);
-        });
-        break;
-      case SortOption.nameAsc:
-        sorted.sort((a, b) {
-          final nameA = a['name'].toString().toLowerCase();
-          final nameB = b['name'].toString().toLowerCase();
-          return nameA.compareTo(nameB);
-        });
-        break;
-      case SortOption.nameDesc:
-        sorted.sort((a, b) {
-          final nameA = a['name'].toString().toLowerCase();
-          final nameB = b['name'].toString().toLowerCase();
-          return nameB.compareTo(nameA);
-        });
-        break;
-    }
-
-    return sorted;
   }
 
   void searchPokemon(String query) {
@@ -111,17 +51,9 @@ class _HomePageState extends State<HomePage> {
     _debounce = Timer(const Duration(milliseconds: 300), () {
       if (!mounted) return;
 
-      final q = query.toLowerCase();
-
       setState(() {
-        final filtered = allPokemons.where((p) {
-          final name = p['name'].toString().toLowerCase();
-          final id = p['id'].toString();
-
-          return name.contains(q) || id.contains(q);
-        }).toList();
-
-        filteredPokemons = _sortPokemons(filtered);
+        final filtered = PokemonData.searchPokemons(allPokemons, query);
+        filteredPokemons = PokemonData.sortPokemons(filtered, currentSort);
       });
     });
   }
@@ -131,7 +63,10 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       currentSort = option;
-      filteredPokemons = _sortPokemons(filteredPokemons);
+      filteredPokemons = PokemonData.sortPokemons(
+        filteredPokemons,
+        currentSort,
+      );
     });
   }
 
@@ -209,7 +144,11 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: () {
-                          debugPrint('Tapped ${p['name']}');
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => DetailsPage(pokemon: p),
+                            ),
+                          );
                         },
                         splashColor: Theme.of(
                           context,
