@@ -1,3 +1,4 @@
+import 'package:application/data/notifiers.dart';
 import 'package:flutter/material.dart';
 import 'package:application/data/string_extension.dart';
 import 'package:application/data/pokemon.dart';
@@ -16,12 +17,6 @@ class _DetailsPageState extends State<DetailsPage> {
   late Map<String, dynamic> currentPokemon;
   int currentIndex = 0;
   bool loading = true;
-
-  TextEditingController controller = TextEditingController();
-  bool? isChecked = false;
-  bool isSwitched = false;
-  double sliderValue = 0.0;
-  String? menuItem = 'e1';
 
   @override
   void initState() {
@@ -66,6 +61,29 @@ class _DetailsPageState extends State<DetailsPage> {
     });
   }
 
+  void toggleFavorite() {
+    final favorites = List<Map<String, dynamic>>.from(
+      favoritedPokemonsNotifier.value,
+    );
+    final index = favorites.indexWhere(
+      (p) => p['id'].toString() == currentPokemon['id'].toString(),
+    );
+
+    if (index >= 0) {
+      favorites.removeAt(index);
+    } else {
+      favorites.add(currentPokemon);
+    }
+
+    favoritedPokemonsNotifier.value = favorites;
+  }
+
+  bool isFavorited() {
+    return favoritedPokemonsNotifier.value.any(
+      (p) => p['id'].toString() == currentPokemon['id'].toString(),
+    );
+  }
+
   int get previousIndex =>
       (currentIndex - 1 + allPokemons.length) % allPokemons.length;
   int get nextIndex => (currentIndex + 1) % allPokemons.length;
@@ -80,8 +98,18 @@ class _DetailsPageState extends State<DetailsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Details'),
-        // actions: const [CloseButton()],
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.star_border))],
+        actions: [
+          ValueListenableBuilder<List<Map<String, dynamic>>>(
+            valueListenable: favoritedPokemonsNotifier,
+            builder: (context, favorites, child) {
+              final isFav = isFavorited();
+              return IconButton(
+                onPressed: toggleFavorite,
+                icon: Icon(isFav ? Icons.star : Icons.star_border),
+              );
+            },
+          ),
+        ],
       ),
       body: loading
           ? const Center(child: CircularProgressIndicator())
@@ -104,17 +132,6 @@ class _DetailsPageState extends State<DetailsPage> {
                       Text(
                         '#${currentPokemon['id']?.toString() ?? 'Unknown ID'}',
                       ),
-                      // Image.asset(
-                      //   'assets/images/sprites/${currentPokemon['id']}.gif',
-                      //   fit: BoxFit.contain,
-                      //   excludeFromSemantics: true,
-                      //   errorBuilder: (context, error, stackTrace) {
-                      //     return const Icon(
-                      //       Icons.image_not_supported,
-                      //       size: 48,
-                      //     );
-                      //   },
-                      // ),
                       SizedBox(height: 25),
                       Image.asset(
                         'assets/images/pokemon/${currentPokemon['id']}.png',
@@ -128,7 +145,6 @@ class _DetailsPageState extends State<DetailsPage> {
                         },
                       ),
                       SizedBox(height: 25),
-
                       Text(
                         'Type(s)',
                         style: const TextStyle(

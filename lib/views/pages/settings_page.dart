@@ -1,3 +1,4 @@
+import 'package:application/data/notifiers.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -31,7 +32,14 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FilledButton(onPressed: () {}, child: Text("Reset Favorites")),
+              Text('Reset Favorited Pokemons'),
+              SizedBox(height: 8),
+              FilledButton(
+                onPressed: () {
+                  favoritedPokemonsNotifier.value = [];
+                },
+                child: Text("Reset"),
+              ),
               SizedBox(height: 40),
               // DropdownButton(
               //   value: menuItem,
