@@ -1,4 +1,5 @@
 import 'package:application/data/notifiers.dart';
+import 'package:application/play_sound.dart';
 import 'package:flutter/material.dart';
 import 'package:application/data/string_extension.dart';
 import 'package:application/data/pokemon.dart';
@@ -44,6 +45,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
   void goToPrevious() {
     if (allPokemons.isEmpty) return;
+    playSound(soundString: 'SEQ_SE_SELECT1.wav');
 
     setState(() {
       currentIndex =
@@ -54,6 +56,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
   void goToNext() {
     if (allPokemons.isEmpty) return;
+    playSound(soundString: 'SEQ_SE_SELECT1.wav');
 
     setState(() {
       currentIndex = (currentIndex + 1) % allPokemons.length;
@@ -70,8 +73,10 @@ class _DetailsPageState extends State<DetailsPage> {
     );
 
     if (index >= 0) {
+      playSound(soundString: 'SEQ_SE_MSCL_05.wav');
       favorites.removeAt(index);
     } else {
+      playSound(soundString: 'SEQ_SE_DECIDE2.wav');
       favorites.add(currentPokemon);
     }
 
@@ -98,6 +103,13 @@ class _DetailsPageState extends State<DetailsPage> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            playSound(soundString: 'SEQ_SE_CANCEL1.wav');
+            Navigator.of(context).pop();
+          },
+        ),
         title: const Text(
           'Details',
           style: TextStyle(fontFamily: 'PokemonBW', fontSize: 28),
@@ -115,6 +127,7 @@ class _DetailsPageState extends State<DetailsPage> {
           ),
         ],
       ),
+
       body: loading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(

@@ -1,3 +1,4 @@
+import 'package:application/play_sound.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:application/data/string_extension.dart';
@@ -62,6 +63,7 @@ class _HomePageState extends State<HomePage> {
     if (option == null || option == currentSort) return;
 
     setState(() {
+      playSound(soundString: 'SEQ_SE_MSCL_01.wav');
       currentSort = option;
       filteredPokemons = PokemonData.sortPokemons(
         filteredPokemons,
@@ -82,7 +84,9 @@ class _HomePageState extends State<HomePage> {
           PopupMenuButton<SortOption>(
             icon: const Icon(Icons.sort),
             tooltip: 'Sort by',
-            onSelected: changeSortOption,
+            onSelected: (value) {
+              changeSortOption(value);
+            },
             itemBuilder: (context) => SortOption.values.map((option) {
               return PopupMenuItem<SortOption>(
                 value: option,
@@ -150,7 +154,11 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => DetailsPage(pokemon: p),
+                              // builder: (context) => DetailsPage(pokemon: p),
+                              builder: (context) {
+                                playSound(soundString: 'SEQ_SE_DECIDE1.wav');
+                                return DetailsPage(pokemon: p);
+                              },
                             ),
                           );
                         },

@@ -1,4 +1,5 @@
 import 'package:application/data/notifiers.dart';
+import 'package:application/play_sound.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -24,6 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         leading: BackButton(
           onPressed: () {
+            playSound(soundString: 'SEQ_SE_CANCEL1.wav');
             Navigator.pop(context);
           },
         ),
@@ -39,6 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
               SizedBox(height: 8),
               FilledButton(
                 onPressed: () {
+                  playSound(soundString: 'SEQ_SE_SYS_63.wav');
                   favoritedPokemonsNotifier.value = [];
                   saveFavoritesToStorage();
 

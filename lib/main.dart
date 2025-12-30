@@ -1,4 +1,5 @@
 import 'package:application/data/notifiers.dart';
+import 'package:application/play_sound.dart';
 import 'package:application/views/widget_tree.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,16 @@ void main() async {
 
   await loadFavoritesFromStorage();
   await loadDarkModeFromStorage();
+
+  await initSounds();
+
+  FlutterError.onError = (FlutterErrorDetails details) {
+    if (details.toString().contains('audioplayers/events') ||
+        details.toString().contains('non-platform thread')) {
+      return;
+    }
+    FlutterError.dumpErrorToConsole(details);
+  };
 
   runApp(const MyApp());
 }

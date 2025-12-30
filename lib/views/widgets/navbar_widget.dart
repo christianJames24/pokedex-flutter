@@ -1,4 +1,5 @@
 import 'package:application/data/notifiers.dart';
+import 'package:application/play_sound.dart';
 import 'package:flutter/material.dart';
 
 class NavbarWidget extends StatelessWidget {
@@ -15,6 +16,7 @@ class NavbarWidget extends StatelessWidget {
             NavigationDestination(icon: Icon(Icons.star), label: 'Favorited'),
           ],
           onDestinationSelected: (int value) {
+            playSound(soundString: 'SEQ_SE_SELECT1.wav');
             selectedPageNotifier.value = value;
           },
           selectedIndex: selectedPage,

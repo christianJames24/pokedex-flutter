@@ -1,4 +1,5 @@
 import 'package:application/data/notifiers.dart';
+import 'package:application/play_sound.dart';
 import 'package:flutter/material.dart';
 import 'package:application/data/string_extension.dart';
 import 'details_page.dart';
@@ -79,6 +80,7 @@ class FavoritedPage extends StatelessWidget {
                     }).toList(),
                   ),
                   onTap: () {
+                    playSound(soundString: 'SEQ_SE_DECIDE1.wav');
                     Navigator.push(
                       context,
                       MaterialPageRoute(

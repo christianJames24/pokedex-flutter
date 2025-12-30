@@ -1,4 +1,5 @@
 import 'package:application/data/notifiers.dart';
+import 'package:application/play_sound.dart';
 import 'package:application/views/pages/home_page.dart';
 import 'package:application/views/pages/favorited_page.dart';
 import 'package:application/views/pages/settings_page.dart';
@@ -30,6 +31,11 @@ class WidgetTree extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
+              if (isDarkModeNotifier.value) {
+                playSound(soundString: 'SEQ_SE_DECIDE3.wav');
+              } else {
+                playSound(soundString: 'SEQ_SE_SYS_65.wav');
+              }
               isDarkModeNotifier.value = !isDarkModeNotifier.value;
               saveDarkModeToStorage();
             },
@@ -46,6 +52,7 @@ class WidgetTree extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
+                    playSound(soundString: 'SEQ_SE_DECIDE2.wav');
                     return SettingsPage();
                   },
                 ),
