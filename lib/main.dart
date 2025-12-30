@@ -2,7 +2,12 @@ import 'package:application/data/notifiers.dart';
 import 'package:application/views/widget_tree.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); //required for async operations
+
+  await loadFavoritesFromStorage();
+  await loadDarkModeFromStorage();
+
   runApp(const MyApp());
 }
 
@@ -30,6 +35,7 @@ class _MyAppState extends State<MyApp> {
               seedColor: Colors.blue,
               brightness: isDarkMode ? Brightness.dark : Brightness.light,
             ),
+            // fontFamily: 'PokemonBW',
           ),
           home: WidgetTree(),
         );

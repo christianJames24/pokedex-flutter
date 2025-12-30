@@ -76,6 +76,7 @@ class _DetailsPageState extends State<DetailsPage> {
     }
 
     favoritedPokemonsNotifier.value = favorites;
+    saveFavoritesToStorage();
   }
 
   bool isFavorited() {

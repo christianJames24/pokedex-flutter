@@ -15,15 +15,23 @@ class WidgetTree extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         // title: Text("Unova Pokedex"),
-        title: Image.asset(
-          'assets/images/International_Pokémon_logo.svg.png',
-          fit: BoxFit.cover,
-          height: 40.0,
-        ),
+        toolbarHeight: 70,
+        title: isDarkModeNotifier.value
+            ? Image.asset(
+                'assets/images/white_logo.webp',
+                fit: BoxFit.cover,
+                height: 60.0,
+              )
+            : Image.asset(
+                'assets/images/black_logo.webp',
+                fit: BoxFit.cover,
+                height: 60.0,
+              ),
         actions: [
           IconButton(
             onPressed: () {
               isDarkModeNotifier.value = !isDarkModeNotifier.value;
+              saveDarkModeToStorage();
             },
             icon: ValueListenableBuilder(
               valueListenable: isDarkModeNotifier,
