@@ -1,8 +1,9 @@
-# application
+# info
 
-A new Flutter project.
+This is a Pokedex app made in Flutter for the express purpose of learning. It includes pokemon 494-649.
 
-## instructions (windows)
+
+## instructions to run (windows)
 1. Windows+R
 2. ms-settings:developers
 3. Press Enter
